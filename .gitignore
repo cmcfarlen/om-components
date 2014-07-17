@@ -1,5 +1,7 @@
 .repl/
 target/
 out/
+resources/public/devcards/js/
 *.swp
 .lein*
+
