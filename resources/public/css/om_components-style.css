@@ -1,0 +1,92 @@
+/* om-components CSS */
+
+body {
+    font: 13px/1.231 arial,helvetica,clean,sans-serif;
+}
+
+table {
+    border-color: gray;
+}
+
+.datatable {
+    margin: 0;
+}
+
+.datatable table {
+    font-family: arial;
+    font-size: inherit;
+    border-collapse: separate;
+    border-spacing: 0;
+    width: 100%;
+}
+
+.datatable-columns {
+}
+
+.datatable-columns th {
+    background: -webkit-linear-gradient(top,#f5f5f5 0,#e2e2e2 100%);
+    border-right: 1px solid #fff;
+    text-align: left;
+    font-family: Helvetica,sans-serif;
+    font-weight: bold;
+    font-size: 85%;
+    margin: 0;
+    overflow: visible;
+    padding: 3px 10px;
+    color: #666;
+}
+
+.datatable td {
+    border-right: 1px solid #fff;
+    text-align: left;
+}
+
+.datatable-content {
+
+}
+
+.datatable-liner {
+    margin: 0;
+    overflow: visible;
+    padding: 3px 10px;
+}
+
+.datatable-odd {
+    background-color: #ebf1f8;
+}
+.one {
+    color: red;
+}
+
+.pretty-percent {
+}
+
+.pretty-percent .outer-ring {
+    stroke: #bbb;
+    stroke-width: 4px;
+    fill:none;
+}
+
+.pretty-percent .indicator {
+    stroke: #338;
+    stroke-width: 4px;
+    fill:none;
+}
+
+.pretty-percent text {
+    text-anchor: middle;
+    dominant-baseline: middle;
+    pointer-events: auto;
+    fill: #888;
+    font-size: larger;
+}
+
+.smooth-value {
+    user-select: none;
+}
+
+.smooth-value:hover {
+    cursor: ns-resize;
+}
+
+
