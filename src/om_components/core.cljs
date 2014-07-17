@@ -148,11 +148,23 @@
 (def twopi (* 2  Math/PI))
 (def piovertwo (/ Math/PI 2))
 
-(defn circle-y [c r t]
-  (Math/round (+ c (* r (Math/sin (- (* twopi t) piovertwo)))))) 
+(defn polar->cart
+  [[cx cy] r ang]
+  "ang in radians"
+  []
+  (let [t (- ang piovertwo)]
+    [(+ cx (* r (Math/cos t)))
+     (+ cy (* r (Math/sin t)))]))
 
-(defn circle-x [c r t]
-  (Math/round (+ c (* r (Math/cos (- (* twopi t) piovertwo))))))
+(defn arc
+  [center r start-t end-t]
+  "t = 0 is the top of the circle. t is in percent of the circle"
+  (let [start-ang (* start-t twopi)
+        end-ang (* (if (= end-t 1) 0.9999 end-t) twopi)
+        spt (polar->cart center r start-ang)
+        ept (polar->cart center r end-ang)
+        large (if (> (- end-t start-t) .5) 1 0)]
+    (str "M" (spt 0) "," (spt 1) "A" r "," r " 0 " large ",1 " (ept 0) "," (ept 1))))
 
 (defn pretty-percent [data owner {:keys [key-name maxval]}]
   (reify
@@ -161,24 +173,17 @@
       (let [r 20
             cx 25
             cy 25
-            c 0
-            t (/ (key-name data) maxval)
-            x (circle-x cx r t)
-            y (circle-y cy r t)
-            large (if (> t .5) 1 0)
-            ]
+            t (/ (key-name data) maxval)]
           (dom/svg #js {:className "pretty-percent"
                         :width 50
                         :height 50}
-                   (dom/path #js {:className "outer-ring"
-                                  :d "M25,25m0,-20a20,20 0 1,1 0,40a20,20 0 1,1 0,-40"})
+                   (dom/circle #js {:className "outer-ring"
+                                    :cx cx
+                                    :cy cy
+                                    :r r})
                    (dom/path #js {:className "indicator"
-                                  :d (str "M25,25m0,-20A20,20 0 " large ",1 " x "," y)})
-                   (dom/text #js {:x "50%" :y "54%"} (str (Math/round (* 100 t))))
-                   #_(dom/circle #js {:cx 25 :cy 5 :r 2 :fill "red"})
-                   #_(dom/circle #js {:cx x :cy y :r 2 :fill "green"})
-                   )))))
-
+                                  :d (arc [cx cy] r 0 t)})
+                   (dom/text #js {:x "50%" :y "54%"} (str (Math/round (* 100 t)))))))))
 
 ;; draggable number editor
 
